@@ -141,3 +141,12 @@ def run_tool(name, args, user_id, thread_id, status_profile):
     except KeyError as missing:
         return {"error": f"missing argument {missing}"}
     return {"error": f"unknown tool '{name}'"}
+
+
+if __name__ == "__main__":
+    print("find_instructions('wifi') ->", json.dumps(find_instructions("wifi"), ensure_ascii=False))
+    print("find_instructions('printer') ->", json.dumps(find_instructions("printer")))
+    for profile in STATUS["profiles"]:
+        print(f"check_service_status('wifi', '{profile}') ->", json.dumps(check_service_status("wifi", profile)))
+    print("check_service_status('password', 'recovery_outage') ->", json.dumps(check_service_status("password", "recovery_outage")))
+    print("prepare_ticket(... no steps ...) ->", json.dumps(prepare_ticket("wifi", "no connection", [], None, "demo-user-a", "direct", "normal")))
