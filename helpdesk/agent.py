@@ -4,6 +4,7 @@ import os
 from langchain_core.messages import AIMessage, SystemMessage, ToolMessage
 from langgraph.graph import END, START, MessagesState, StateGraph
 
+from helpdesk.memory import find_language_request, get_language, save_language
 from helpdesk.tools import TOOL_SCHEMAS, run_tool
 
 MAX_TOOL_ROUNDS = 5
@@ -29,17 +30,33 @@ class AgentState(MessagesState):
     thread_id: str
     status_profile: str
     tool_rounds: int
+    language: str | None
+    language_saved_now: bool
 
 
-def start_turn(state):
-    return {"tool_rounds": 0}
+def load_user_memory(state):
+    new_language = find_language_request(state["messages"][-1].content)
+    if new_language:
+        save_language(state["user_id"], new_language)
+    return {
+        "language": get_language(state["user_id"]),
+        "language_saved_now": bool(new_language),
+        "tool_rounds": 0,
+    }
+
+
+def memory_text(language):
+    if language:
+        return f"User memory: this user asked for replies in {language}. Reply in {language}."
+    return "User memory: nothing is saved for this user (no language preference). Reply in English by default, but do not say that English was the user's choice."
 
 
 def make_agent_node(model):
     model_with_tools = model.bind_tools(TOOL_SCHEMAS)
 
     def agent(state):
-        messages = [SystemMessage(SYSTEM_PROMPT)] + state["messages"]
+        system = SYSTEM_PROMPT + "\n" + memory_text(state.get("language"))
+        messages = [SystemMessage(system)] + state["messages"]
         return {"messages": [model_with_tools.invoke(messages)]}
 
     return agent
@@ -75,13 +92,13 @@ def route_after_agent(state):
 
 def build_agent(model, checkpointer=None):
     graph = StateGraph(AgentState)
-    graph.add_node("start_turn", start_turn)
+    graph.add_node("load_user_memory", load_user_memory)
     graph.add_node("agent", make_agent_node(model))
     graph.add_node("tools", tools)
     graph.add_node("limit_reached", limit_reached)
 
-    graph.add_edge(START, "start_turn")
-    graph.add_edge("start_turn", "agent")
+    graph.add_edge(START, "load_user_memory")
+    graph.add_edge("load_user_memory", "agent")
     graph.add_conditional_edges("agent", route_after_agent, ["tools", "limit_reached", END])
     graph.add_edge("tools", "agent")
     graph.add_edge("limit_reached", END)
