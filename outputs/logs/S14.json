@@ -1,0 +1,64 @@
+{
+  "scenario": "S14",
+  "title": "Password recovery outage",
+  "part": 2,
+  "status_profile": "recovery_outage",
+  "command": "python run_scenarios.py S14",
+  "reset_before": true,
+  "events": [
+    {
+      "user_id": "demo-user-a",
+      "thread_id": "s14",
+      "message": "My password recovery page is unavailable. Check the service status. Is there a known problem?",
+      "process_id": 14049,
+      "reply": "Yes. The account-recovery service is currently experiencing an outage, so the password recovery page may be unavailable. No repair time is provided.",
+      "trace": [
+        {
+          "node": "load_user_memory",
+          "user_memory_language": null,
+          "language_saved_now": false
+        },
+        {
+          "node": "agent",
+          "tool_requests": [
+            {
+              "tool": "check_service_status",
+              "args": {
+                "service": "password"
+              }
+            }
+          ]
+        },
+        {
+          "node": "tools",
+          "tool_results": [
+            {
+              "tool": "check_service_status",
+              "result": {
+                "service": "account_recovery",
+                "status": "outage",
+                "message": "The demo account-recovery service is unavailable. The fixture gives no repair time.",
+                "status_profile": "recovery_outage",
+                "source": "data/service_status.json"
+              }
+            }
+          ],
+          "tool_rounds": 1
+        },
+        {
+          "node": "agent",
+          "answer": "Yes. The account-recovery service is currently experiencing an outage, so the password recovery page may be unavailable. No repair time is provided."
+        }
+      ],
+      "sources": {
+        "conversation_memory": "0 earlier messages loaded from the checkpoint for thread 's14'",
+        "user_memory": "no saved preference for this user",
+        "reference_file": [
+          "data/service_status.json"
+        ]
+      },
+      "ticket_files": [],
+      "loop_limit_reached": false
+    }
+  ]
+}

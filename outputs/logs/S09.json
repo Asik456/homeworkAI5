@@ -1,0 +1,94 @@
+{
+  "scenario": "S09",
+  "title": "Missing ticket details",
+  "part": 2,
+  "status_profile": "normal",
+  "command": "python run_scenarios.py S09",
+  "reset_before": true,
+  "events": [
+    {
+      "user_id": "demo-user-a",
+      "thread_id": "s09",
+      "message": "Prepare a support ticket.",
+      "process_id": 13997,
+      "reply": "Please provide:\n\n1. What problem are you experiencing?\n2. What steps have you already tried?\n3. Is this about Wi‑Fi, password recovery, or another issue?",
+      "trace": [
+        {
+          "node": "load_user_memory",
+          "user_memory_language": null,
+          "language_saved_now": false
+        },
+        {
+          "node": "agent",
+          "answer": "Please provide:\n\n1. What problem are you experiencing?\n2. What steps have you already tried?\n3. Is this about Wi‑Fi, password recovery, or another issue?"
+        }
+      ],
+      "sources": {
+        "conversation_memory": "0 earlier messages loaded from the checkpoint for thread 's09'",
+        "user_memory": "no saved preference for this user",
+        "reference_file": []
+      },
+      "ticket_files": [],
+      "loop_limit_reached": false
+    },
+    {
+      "user_id": "demo-user-a",
+      "thread_id": "s09",
+      "message": "The issue is Wi-Fi. I enabled it and tried reconnecting, but it still fails.",
+      "process_id": 13997,
+      "reply": "A local Wi‑Fi support ticket draft has been prepared.\n\n- **Ticket ID:** TKT-33B18B80\n- **File:** `outputs/tickets/TKT-33B18B80.json`\n- **Status:** Draft only—nothing was sent.",
+      "trace": [
+        {
+          "node": "load_user_memory",
+          "user_memory_language": null,
+          "language_saved_now": false
+        },
+        {
+          "node": "agent",
+          "tool_requests": [
+            {
+              "tool": "prepare_ticket",
+              "args": {
+                "category": "wifi",
+                "summary": "Wi-Fi still fails after enabling Wi-Fi and trying to reconnect.",
+                "steps_tried": [
+                  "Enabled Wi-Fi",
+                  "Tried reconnecting"
+                ],
+                "service_status": "not checked"
+              }
+            }
+          ]
+        },
+        {
+          "node": "tools",
+          "tool_results": [
+            {
+              "tool": "prepare_ticket",
+              "result": {
+                "ticket_id": "TKT-33B18B80",
+                "file": "outputs/tickets/TKT-33B18B80.json",
+                "status": "draft",
+                "sent": false
+              }
+            }
+          ],
+          "tool_rounds": 1
+        },
+        {
+          "node": "agent",
+          "answer": "A local Wi‑Fi support ticket draft has been prepared.\n\n- **Ticket ID:** TKT-33B18B80\n- **File:** `outputs/tickets/TKT-33B18B80.json`\n- **Status:** Draft only—nothing was sent."
+        }
+      ],
+      "sources": {
+        "conversation_memory": "2 earlier messages loaded from the checkpoint for thread 's09'",
+        "user_memory": "no saved preference for this user",
+        "reference_file": []
+      },
+      "ticket_files": [
+        "outputs/tickets/TKT-33B18B80.json"
+      ],
+      "loop_limit_reached": false
+    }
+  ]
+}

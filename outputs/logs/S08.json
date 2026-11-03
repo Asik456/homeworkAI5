@@ -1,0 +1,64 @@
+{
+  "scenario": "S08",
+  "title": "Status source unavailable",
+  "part": 2,
+  "status_profile": "status_unavailable",
+  "command": "python run_scenarios.py S08",
+  "reset_before": true,
+  "events": [
+    {
+      "user_id": "demo-user-a",
+      "thread_id": "s08",
+      "message": "Check whether Wi-Fi is down. If it is operating, prepare a ticket. I already enabled Wi-Fi and reconnected, with no success.",
+      "process_id": 13992,
+      "reply": "The Wi‑Fi status could not be checked because the status source is unavailable. I did not prepare a ticket because I can’t confirm that Wi‑Fi is operating.\n\nWould you like me to prepare a local ticket draft noting that the status could not be checked?",
+      "trace": [
+        {
+          "node": "load_user_memory",
+          "user_memory_language": null,
+          "language_saved_now": false
+        },
+        {
+          "node": "agent",
+          "tool_requests": [
+            {
+              "tool": "check_service_status",
+              "args": {
+                "service": "wifi"
+              }
+            }
+          ]
+        },
+        {
+          "node": "tools",
+          "tool_results": [
+            {
+              "tool": "check_service_status",
+              "result": {
+                "service": "wifi",
+                "status": "unknown",
+                "message": "The demo Wi-Fi status source is unavailable.",
+                "status_profile": "status_unavailable",
+                "source": "data/service_status.json"
+              }
+            }
+          ],
+          "tool_rounds": 1
+        },
+        {
+          "node": "agent",
+          "answer": "The Wi‑Fi status could not be checked because the status source is unavailable. I did not prepare a ticket because I can’t confirm that Wi‑Fi is operating.\n\nWould you like me to prepare a local ticket draft noting that the status could not be checked?"
+        }
+      ],
+      "sources": {
+        "conversation_memory": "0 earlier messages loaded from the checkpoint for thread 's08'",
+        "user_memory": "no saved preference for this user",
+        "reference_file": [
+          "data/service_status.json"
+        ]
+      },
+      "ticket_files": [],
+      "loop_limit_reached": false
+    }
+  ]
+}

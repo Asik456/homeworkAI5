@@ -1,0 +1,107 @@
+you> I cannot connect to Wi-Fi.
+{
+  "trace": [
+    {
+      "node": "load_user_memory",
+      "user_memory_language": null,
+      "language_saved_now": false
+    },
+    {
+      "node": "agent",
+      "tool_requests": [
+        {
+          "tool": "find_instructions",
+          "args": {
+            "topic": "wifi"
+          }
+        }
+      ]
+    },
+    {
+      "node": "tools",
+      "tool_results": [
+        {
+          "tool": "find_instructions",
+          "result": {
+            "instruction_id": "GUIDE-WIFI",
+            "title": "Connect to the practice campus network",
+            "steps": [
+              "Check that Wi-Fi is enabled and airplane mode is off.",
+              "Select the fictional Campus-Demo network.",
+              "If connection fails, forget the saved network and try connecting again.",
+              "If the problem remains, check the service status before preparing a ticket."
+            ],
+            "source": "data/helpdesk.json"
+          }
+        }
+      ],
+      "tool_rounds": 1
+    },
+    {
+      "node": "agent",
+      "answer": "Try these steps:\n\n1. Check that Wi‑Fi is enabled and airplane mode is off.\n2. Select the fictional **Campus-Demo** network.\n3. If connection fails, forget the saved network and try connecting again.\n4. If the problem remains, check the service status before preparing a ticket."
+    }
+  ],
+  "sources": {
+    "conversation_memory": "0 earlier messages loaded from the checkpoint for thread 'already-tried'",
+    "user_memory": "no saved preference for this user",
+    "reference_file": [
+      "data/helpdesk.json"
+    ]
+  }
+}
+helpdesk> Try these steps:
+
+1. Check that Wi‑Fi is enabled and airplane mode is off.
+2. Select the fictional **Campus-Demo** network.
+3. If connection fails, forget the saved network and try connecting again.
+4. If the problem remains, check the service status before preparing a ticket.
+you> I already tried that.
+{
+  "trace": [
+    {
+      "node": "load_user_memory",
+      "user_memory_language": null,
+      "language_saved_now": false
+    },
+    {
+      "node": "agent",
+      "tool_requests": [
+        {
+          "tool": "check_service_status",
+          "args": {
+            "service": "wifi"
+          }
+        }
+      ]
+    },
+    {
+      "node": "tools",
+      "tool_results": [
+        {
+          "tool": "check_service_status",
+          "result": {
+            "service": "wifi",
+            "status": "operational",
+            "message": "The demo Wi-Fi service has no reported outage.",
+            "status_profile": "normal",
+            "source": "data/service_status.json"
+          }
+        }
+      ],
+      "tool_rounds": 1
+    },
+    {
+      "node": "agent",
+      "answer": "The demo Wi‑Fi service is operational with no reported outage. You’ve tried the recommended steps. Would you like me to prepare a local ticket draft? Nothing would be sent."
+    }
+  ],
+  "sources": {
+    "conversation_memory": "4 earlier messages loaded from the checkpoint for thread 'already-tried'",
+    "user_memory": "no saved preference for this user",
+    "reference_file": [
+      "data/service_status.json"
+    ]
+  }
+}
+helpdesk> The demo Wi‑Fi service is operational with no reported outage. You’ve tried the recommended steps. Would you like me to prepare a local ticket draft? Nothing would be sent.

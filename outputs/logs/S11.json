@@ -1,0 +1,97 @@
+{
+  "scenario": "S11",
+  "title": "Persist and recall after restart",
+  "part": 3,
+  "status_profile": "normal",
+  "command": "python run_scenarios.py S11",
+  "reset_before": true,
+  "events": [
+    {
+      "user_id": "demo-user-a",
+      "thread_id": "restart-a",
+      "message": "Please remember that I prefer replies in Kazakh. My issue is Wi-Fi. I enabled it and tried reconnecting, but it still fails.",
+      "process_id": 14019,
+      "reply": "Жауаптарды қазақ тілінде беремін.\n\nWi‑Fi қосулы және қайта қосылуға тырысқаныңызды түсіндім. Келесі қадамдарды орындаңыз:\n\n1. Ұшақ режимі өшірулі екенін тексеріңіз.\n2. **Campus-Demo** желісін таңдаңыз.\n3. Қосылу сәтсіз болса, сақталған желіні ұмытып, қайта қосылып көріңіз.\n4. Мәселе шешілмесе, қызмет күйін тексеріңіз.\n\nҚызметтің қазіргі күйін тексерейін бе?",
+      "trace": [
+        {
+          "node": "load_user_memory",
+          "user_memory_language": "Kazakh",
+          "language_saved_now": true
+        },
+        {
+          "node": "agent",
+          "tool_requests": [
+            {
+              "tool": "find_instructions",
+              "args": {
+                "topic": "wifi"
+              }
+            }
+          ]
+        },
+        {
+          "node": "tools",
+          "tool_results": [
+            {
+              "tool": "find_instructions",
+              "result": {
+                "instruction_id": "GUIDE-WIFI",
+                "title": "Connect to the practice campus network",
+                "steps": [
+                  "Check that Wi-Fi is enabled and airplane mode is off.",
+                  "Select the fictional Campus-Demo network.",
+                  "If connection fails, forget the saved network and try connecting again.",
+                  "If the problem remains, check the service status before preparing a ticket."
+                ],
+                "source": "data/helpdesk.json"
+              }
+            }
+          ],
+          "tool_rounds": 1
+        },
+        {
+          "node": "agent",
+          "answer": "Жауаптарды қазақ тілінде беремін.\n\nWi‑Fi қосулы және қайта қосылуға тырысқаныңызды түсіндім. Келесі қадамдарды орындаңыз:\n\n1. Ұшақ режимі өшірулі екенін тексеріңіз.\n2. **Campus-Demo** желісін таңдаңыз.\n3. Қосылу сәтсіз болса, сақталған желіні ұмытып, қайта қосылып көріңіз.\n4. Мәселе шешілмесе, қызмет күйін тексеріңіз.\n\nҚызметтің қазіргі күйін тексерейін бе?"
+        }
+      ],
+      "sources": {
+        "conversation_memory": "0 earlier messages loaded from the checkpoint for thread 'restart-a'",
+        "user_memory": "language = Kazakh",
+        "reference_file": [
+          "data/helpdesk.json"
+        ]
+      },
+      "ticket_files": [],
+      "loop_limit_reached": false
+    },
+    {
+      "action": "restart_process",
+      "note": "the previous Python process ended; a new process starts with the same local-storage"
+    },
+    {
+      "user_id": "demo-user-a",
+      "thread_id": "restart-a",
+      "message": "Which problem and steps did we discuss?",
+      "process_id": 14023,
+      "reply": "**Мәселе:** Wi‑Fi желісіне қосыла алмай жатырсыз.\n\n**Сіз жасап көрген қадамдар:**\n- Wi‑Fi қосылды.\n- Қайта қосылуға тырыстыңыз, бірақ сәтсіз болды.\n\n**Біз талқылаған келесі қадамдар:**\n- Ұшақ режимінің өшірулі екенін тексеру.\n- **Campus-Demo** желісін таңдау.\n- Сақталған желіні ұмытып, қайта қосылу.\n- Мәселе жалғасса, қызмет күйін тексеру.\n\nСоңғы үш қадамды жасап көргеніңізді айтпадыңыз.",
+      "trace": [
+        {
+          "node": "load_user_memory",
+          "user_memory_language": "Kazakh",
+          "language_saved_now": false
+        },
+        {
+          "node": "agent",
+          "answer": "**Мәселе:** Wi‑Fi желісіне қосыла алмай жатырсыз.\n\n**Сіз жасап көрген қадамдар:**\n- Wi‑Fi қосылды.\n- Қайта қосылуға тырыстыңыз, бірақ сәтсіз болды.\n\n**Біз талқылаған келесі қадамдар:**\n- Ұшақ режимінің өшірулі екенін тексеру.\n- **Campus-Demo** желісін таңдау.\n- Сақталған желіні ұмытып, қайта қосылу.\n- Мәселе жалғасса, қызмет күйін тексеру.\n\nСоңғы үш қадамды жасап көргеніңізді айтпадыңыз."
+        }
+      ],
+      "sources": {
+        "conversation_memory": "4 earlier messages loaded from the checkpoint for thread 'restart-a'",
+        "user_memory": "language = Kazakh",
+        "reference_file": []
+      },
+      "ticket_files": [],
+      "loop_limit_reached": false
+    }
+  ]
+}

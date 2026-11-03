@@ -1,0 +1,64 @@
+{
+  "scenario": "S12",
+  "title": "Preference across threads without replay",
+  "part": 3,
+  "status_profile": "normal",
+  "command": "python run_scenarios.py S12",
+  "reset_before": true,
+  "events": [
+    {
+      "user_id": "demo-user-a",
+      "thread_id": "preference-a1",
+      "message": "Please remember that I prefer replies in Kazakh. I have a Wi-Fi problem.",
+      "process_id": 14026,
+      "reply": "Түсіндім, бұдан әрі қазақша жауап беремін.\n\nWi‑Fi мәселесі нақты қалай көрінеді: желіге қосыла алмайсыз ба, интернет баяу ма, әлде қосылу жиі үзіле ме? Қазірге дейін қандай қадамдарды жасап көрдіңіз?",
+      "trace": [
+        {
+          "node": "load_user_memory",
+          "user_memory_language": "Kazakh",
+          "language_saved_now": true
+        },
+        {
+          "node": "agent",
+          "answer": "Түсіндім, бұдан әрі қазақша жауап беремін.\n\nWi‑Fi мәселесі нақты қалай көрінеді: желіге қосыла алмайсыз ба, интернет баяу ма, әлде қосылу жиі үзіле ме? Қазірге дейін қандай қадамдарды жасап көрдіңіз?"
+        }
+      ],
+      "sources": {
+        "conversation_memory": "0 earlier messages loaded from the checkpoint for thread 'preference-a1'",
+        "user_memory": "language = Kazakh",
+        "reference_file": []
+      },
+      "ticket_files": [],
+      "loop_limit_reached": false
+    },
+    {
+      "action": "restart_process",
+      "note": "the previous Python process ended; a new process starts with the same local-storage"
+    },
+    {
+      "user_id": "demo-user-a",
+      "thread_id": "preference-a2",
+      "message": "Which language did I ask you to use? What can you help with?",
+      "process_id": 14029,
+      "reply": "Сіз жауаптарды **қазақ тілінде** беруді сұрадыңыз.\n\nМен мыналарға көмектесе аламын:\n\n- Wi‑Fi ақауларын жою;\n- Құпиясөзді қалпына келтіру бойынша нұсқаулық беру;\n- Қызметтің жұмыс істеп тұрғанын немесе істен шыққанын тексеру;\n- Жергілікті IT-қолдау билеті жобасын дайындау.\n\nБилет тек жергілікті жоба ретінде сақталады — ештеңе жіберілмейді.",
+      "trace": [
+        {
+          "node": "load_user_memory",
+          "user_memory_language": "Kazakh",
+          "language_saved_now": false
+        },
+        {
+          "node": "agent",
+          "answer": "Сіз жауаптарды **қазақ тілінде** беруді сұрадыңыз.\n\nМен мыналарға көмектесе аламын:\n\n- Wi‑Fi ақауларын жою;\n- Құпиясөзді қалпына келтіру бойынша нұсқаулық беру;\n- Қызметтің жұмыс істеп тұрғанын немесе істен шыққанын тексеру;\n- Жергілікті IT-қолдау билеті жобасын дайындау.\n\nБилет тек жергілікті жоба ретінде сақталады — ештеңе жіберілмейді."
+        }
+      ],
+      "sources": {
+        "conversation_memory": "0 earlier messages loaded from the checkpoint for thread 'preference-a2'",
+        "user_memory": "language = Kazakh",
+        "reference_file": []
+      },
+      "ticket_files": [],
+      "loop_limit_reached": false
+    }
+  ]
+}

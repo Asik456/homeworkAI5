@@ -1,0 +1,60 @@
+{
+  "scenario": "S13",
+  "title": "Do not share memory between users",
+  "part": 3,
+  "status_profile": "normal",
+  "command": "python run_scenarios.py S13",
+  "reset_before": true,
+  "events": [
+    {
+      "user_id": "demo-user-a",
+      "thread_id": "isolation-a",
+      "message": "Please remember that I prefer replies in Kazakh. I have a Wi-Fi problem.",
+      "process_id": 14042,
+      "reply": "Түсіндім, бұдан былай қазақ тілінде жауап беремін.\n\nWi‑Fi мәселесі нақты қалай көрінеді: желіге қосыла алмайсыз ба, әлде қосылғанмен интернет жұмыс істемей ме? Қандай қадамдарды жасап көрдіңіз?",
+      "trace": [
+        {
+          "node": "load_user_memory",
+          "user_memory_language": "Kazakh",
+          "language_saved_now": true
+        },
+        {
+          "node": "agent",
+          "answer": "Түсіндім, бұдан былай қазақ тілінде жауап беремін.\n\nWi‑Fi мәселесі нақты қалай көрінеді: желіге қосыла алмайсыз ба, әлде қосылғанмен интернет жұмыс істемей ме? Қандай қадамдарды жасап көрдіңіз?"
+        }
+      ],
+      "sources": {
+        "conversation_memory": "0 earlier messages loaded from the checkpoint for thread 'isolation-a'",
+        "user_memory": "language = Kazakh",
+        "reference_file": []
+      },
+      "ticket_files": [],
+      "loop_limit_reached": false
+    },
+    {
+      "user_id": "demo-user-b",
+      "thread_id": "isolation-b",
+      "message": "Have I told you a preferred language or a previous problem?",
+      "process_id": 14042,
+      "reply": "No. I don’t have a saved preferred language or a previous problem for you. I’ll reply in English by default.",
+      "trace": [
+        {
+          "node": "load_user_memory",
+          "user_memory_language": null,
+          "language_saved_now": false
+        },
+        {
+          "node": "agent",
+          "answer": "No. I don’t have a saved preferred language or a previous problem for you. I’ll reply in English by default."
+        }
+      ],
+      "sources": {
+        "conversation_memory": "0 earlier messages loaded from the checkpoint for thread 'isolation-b'",
+        "user_memory": "no saved preference for this user",
+        "reference_file": []
+      },
+      "ticket_files": [],
+      "loop_limit_reached": false
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "scenario": "S07",
+  "title": "The same request during a Wi-Fi outage",
+  "part": 2,
+  "status_profile": "wifi_outage",
+  "command": "python run_scenarios.py S07",
+  "reset_before": true,
+  "events": [
+    {
+      "user_id": "demo-user-a",
+      "thread_id": "s07",
+      "message": "I enabled Wi-Fi and forgot the saved network, but Campus-Demo still will not connect. Check whether Wi-Fi is down. If it is operating, prepare a ticket about this problem.",
+      "process_id": 13984,
+      "reply": "Wi-Fi is currently experiencing a campus-wide outage. I did not prepare a ticket because the service is not operating. No repair time is available.",
+      "trace": [
+        {
+          "node": "load_user_memory",
+          "user_memory_language": null,
+          "language_saved_now": false
+        },
+        {
+          "node": "agent",
+          "tool_requests": [
+            {
+              "tool": "check_service_status",
+              "args": {
+                "service": "wifi"
+              }
+            }
+          ]
+        },
+        {
+          "node": "tools",
+          "tool_results": [
+            {
+              "tool": "check_service_status",
+              "result": {
+                "service": "wifi",
+                "status": "outage",
+                "message": "The demo Wi-Fi service is unavailable across campus. The fixture gives no repair time.",
+                "status_profile": "wifi_outage",
+                "source": "data/service_status.json"
+              }
+            }
+          ],
+          "tool_rounds": 1
+        },
+        {
+          "node": "agent",
+          "answer": "Wi-Fi is currently experiencing a campus-wide outage. I did not prepare a ticket because the service is not operating. No repair time is available."
+        }
+      ],
+      "sources": {
+        "conversation_memory": "0 earlier messages loaded from the checkpoint for thread 's07'",
+        "user_memory": "no saved preference for this user",
+        "reference_file": [
+          "data/service_status.json"
+        ]
+      },
+      "ticket_files": [],
+      "loop_limit_reached": false
+    }
+  ]
+}
